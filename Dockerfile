@@ -1,2 +1,25 @@
-FROM httpd:2.4
-COPY ./public-html/index.html /usr/local/apache2/htdocs/index.html
+# from tomcat:8.0
+FROM tomcat:8.0
+
+# copy war
+COPY /apache/CICD/JenkinsWar/target/JenkinsWar.war /usr/local/tomcat/webapps/
+
+# run
+CMD ["/usr/local/tomcat/bin/catalina.sh","run"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
