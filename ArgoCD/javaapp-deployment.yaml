@@ -19,7 +19,7 @@ spec:
         app: javaapp
     spec:
       containers:
-      - image: docker.io/georgechiu/cicd
+      - image: docker.io/georgechiu/cicd2
         name: javaapp
         env:
         - name: COLOR
