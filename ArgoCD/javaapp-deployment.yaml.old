@@ -1,28 +1,20 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    app: javaapp
   name: javaapp
 spec:
   replicas: 1
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: javaapp
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: javaapp
     spec:
       containers:
       - image: docker.io/georgechiu/cicd
         name: javaapp
-        env:
-        - name: COLOR
-          value: "blue"
-        resources: {}
----
+        ports:
+        - containerPort: 8080
