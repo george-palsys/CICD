@@ -19,12 +19,10 @@ spec:
         app: javaapp
     spec:
       containers:
-      - image: quay.online.ocp4.com/admin/cicd
+      - image: docker.io/st61008/cicd
         name: javaapp
         env:
         - name: COLOR
           value: "blue"
         resources: {}
-      imagePullSecrets:
-        - name: pullimage-pull-secret
 ---
