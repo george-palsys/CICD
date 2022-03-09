@@ -36,7 +36,7 @@ pipeline {
 			}
         stage("Publish to Nexus Repository Manager") {
             steps {
-                nexusArtifactUploader artifacts: [[artifactId: 'simple-app', classifier: '', file: '/war/JenkinsWar.war', type: 'war']], credentialsId: 'nexus', groupId: 'in.javahome', nexusUrl: '10.107.65.163:8081/repository/JavaApp/', nexusVersion: 'nexus3', protocol: 'http', repository: 'JavaApp', version: '1.0.0'
+                nexusArtifactUploader artifacts: [[artifactId: 'simple-app', classifier: '', file: '/CICD/JenkinsWar/target/JenkinsWar.war', type: 'war']], credentialsId: 'nexus', groupId: 'in.javahome', nexusUrl: '10.107.65.163:8081/repository/JavaApp/', nexusVersion: 'nexus3', protocol: 'http', repository: 'JavaApp', version: '1.0.0'
             }
             }
       }
