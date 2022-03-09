@@ -22,16 +22,14 @@ pipeline {
         }
         stage('clone from SCM') {
             steps {
-                sh 'rm -rf /J01/'
-                sh 'mkdir J01'
-                dir("J01/") {
+                dir("/") {
                 sh 'git clone git@github.com:george-palsys/CICD.git'
                 }
             }
 			}
         stage('Build') { 
             steps {
-                dir("/J01/CICD/JenkinsWar") {
+                dir("/CICD/JenkinsWar") {
                 sh 'mvn -B -DskipTests clean package'
                 }
             }
