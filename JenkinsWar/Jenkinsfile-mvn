@@ -23,6 +23,7 @@ pipeline {
         stage('clone from SCM') {
             steps {
                 dir("/") {
+                sh 'rm -rf /CICD'
                 sh 'git clone git@github.com:george-palsys/CICD.git'
                 }
             }
