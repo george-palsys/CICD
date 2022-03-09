@@ -1,5 +1,5 @@
 pipeline {
-    agent georgeJavaNode01
+    agent {georgeJavaNode01}
     stages {
         stage('Build') { 
             steps {
