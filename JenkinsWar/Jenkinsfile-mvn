@@ -16,7 +16,7 @@ pipeline {
         stage('Build') { 
             steps {
                 dir("/test01/") {
-                sh 'git clone https://github.com/george-palsys/CICD.git'
+                sh 'git clone git@github.com:george-palsys/CICD.git'
                 }
                 dir("/test01/CICD/JenkinsWar") {
                 sh 'mvn -B -DskipTests clean package'
