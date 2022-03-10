@@ -19,7 +19,7 @@ spec:
         app: javaapp
     spec:
       containers:
-      - image: docker.io/st61008/cicd
+      - image: quay.online.ocp4.com/admin/cicd
         name: javaapp
         env:
         - name: COLOR
