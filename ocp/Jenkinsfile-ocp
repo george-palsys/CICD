@@ -24,7 +24,6 @@ pipeline {
                 sh '''
                     argocd app delete javaapp --cascade=false --yes
                     oc delete all --selector app=javaapp
-                    oc delete project javaapp
                 '''
             }
         }
