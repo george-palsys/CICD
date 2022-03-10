@@ -14,7 +14,6 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'argocd', passwordVariable: 'password', usernameVariable: 'username')]){
                sh '''
-                    oc login https://api.ocp49.palsys.com:6443 -u $username -p $password
                     argocd --insecure --grpc-web login argocd.apps.ocp49.palsys.com:443 --username $username --password $password
                 '''
               }
