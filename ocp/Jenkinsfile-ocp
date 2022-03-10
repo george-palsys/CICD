@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage ('login ocp and argocd') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'ocp', passwordVariable: 'password', usernameVariable: 'username')]) {
+                withCredentials([usernamePassword(credentialsId: 'ocp', passwordVariable: 'password', usernameVariable: 'username')]){
                sh '''
                     oc login https://api.ocp49.palsys.com:6443 -u $username -p $password
                     ARGOCD_ROUTE=$(oc -n argocd get route argocd-server -o jsonpath='{.spec.host}')
@@ -24,11 +24,13 @@ pipeline {
         }
         stage('Create javaapp on ocp') { 
             steps {
-                 sh 'argocd app create javaapp --repo https://github.com/george-palsys/CICD.git --path ArgoCD --dest-server https://kubernetes.default.svc --dest-namespace default'
+                 sh '''
+                      argocd app create javaapp --repo https://github.com/george-palsys/CICD.git --path ArgoCD --dest-server https://kubernetes.default.svc --dest-namespace default
+                 '''
                 }
             }
-			}
-        stage("Upload container images") {
+			
+        stage("synsc javaapp") {
             steps {
                 sh 'argocd app sync javaapp'  
             }
