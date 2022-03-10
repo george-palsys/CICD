@@ -1,6 +1,13 @@
 pipeline {
     agent {label 'georgeJavaNode01'}
     stages {
+        stage ('move war to quay folder') {
+            steps {
+                sh '''
+                    cp /CICD/JenkinsWar/target/JenkinsWar.war /CICD/quay/
+                '''
+            }
+        }
         stage ('login quay') {
             steps {
                 sh '''
