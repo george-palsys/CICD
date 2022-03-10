@@ -4,17 +4,15 @@ pipeline {
         stage ('move war to quay folder') {
             steps {
                 sh '''
-                    mv /CICD/JenkinsWar/target/JenkinsWar.war /CICD/quay/
+                    cp /CICD/JenkinsWar/target/JenkinsWar.war /CICD/quay/
                 '''
             }
         }
         stage ('login quay') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'quay', passwordVariable: 'password', usernameVariable: 'username')]) {
                 sh '''
-                    podman login quay.online.ocp4.com --tls-verify=false -u $username -p $password
-                '''
-              } 
+                    podman login quay.online.ocp4.com --tls-verify=false -u admin -p Admin123
+                ''' 
             }
         }
         stage('Build container images') { 
