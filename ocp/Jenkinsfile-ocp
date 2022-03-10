@@ -3,24 +3,23 @@ pipeline {
     stages {
         stage ('login ocp and argocd') {
             steps {
+                withCredentials([usernamePassword(credentialsId: 'ocp', passwordVariable: 'password', usernameVariable: 'username')]) {
                sh '''
-                    oc login --token=sha256~SjWn6ASvZwLEE3GbA7QqMlVTgHhLFEuPac3kVt7qHo0 --server=https://api.ocp49.palsys.com:6443
+                    oc login https://api.ocp49.palsys.com:6443 -u $username -p $password
                     ARGOCD_ROUTE=$(oc -n argocd get route argocd-server -o jsonpath='{.spec.host}')
                     ARGOCD_SERVER_PASSWORD=$(oc get -n argocd secret argocd-initial-admin-secret -o jsonpath='{.data}' | grep password |cut -d ":" -f2 |cut -d "\"" -f2  | base64 --decode)
                     argocd --insecure --grpc-web login ${ARGOCD_ROUTE}:443 --username admin --password ${ARGOCD_SERVER_PASSWORD}
-
                 '''
+              }
             }
         }
         stage ('clean env') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'quay', passwordVariable: 'password', usernameVariable: 'username')]) {
                 sh '''
                     argocd app delete javaapp --cascade=false --yes
                     oc delete all --selector app=javaapp
                     oc delete project javaapp
                 '''
-              } 
             }
         }
         stage('Create javaapp on ocp') { 
