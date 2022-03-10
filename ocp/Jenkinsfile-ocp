@@ -1,14 +1,21 @@
 pipeline {
     agent {label 'georgeJavaNode01'}
     stages {
-        stage ('login ocp and argocd') {
+        stage ('login ocp') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'ocp', passwordVariable: 'password', usernameVariable: 'username')]){
                sh '''
                     oc login https://api.ocp49.palsys.com:6443 -u $username -p $password
-                    ARGOCD_ROUTE=$(oc -n argocd get route argocd-route -o jsonpath='{.spec.host}')
-                    ARGOCD_SERVER_PASSWORD=$(oc get -n argocd secret argocd-initial-admin-secret -o jsonpath='{.data}' | grep password |cut -d ":" -f2 |cut -d "\"" -f2  | base64 --decode)
-                    argocd --insecure --grpc-web login ${ARGOCD_ROUTE}:443 --username admin --password ${ARGOCD_SERVER_PASSWORD}
+                '''
+              }
+            }
+        }
+        stage ('login argocd') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'argocd', passwordVariable: 'password', usernameVariable: 'username')]){
+               sh '''
+                    oc login https://api.ocp49.palsys.com:6443 -u $username -p $password
+                    argocd --insecure --grpc-web login argocd.apps.ocp49.palsys.com:443 --username $username --password $password
                 '''
               }
             }
