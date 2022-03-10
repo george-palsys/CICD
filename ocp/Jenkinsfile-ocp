@@ -19,14 +19,6 @@ pipeline {
               }
             }
         }
-        stage ('clean env') {
-            steps {
-                sh '''
-                    argocd app delete javaapp --cascade=false --yes
-                    oc delete all --selector app=javaapp
-                '''
-            }
-        }
         stage('Create javaapp on ocp') { 
             steps {
                  sh '''
