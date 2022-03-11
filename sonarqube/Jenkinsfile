@@ -2,7 +2,7 @@
         agent {label 'sonarqube'}
         stages {
           stage("build & SonarQube analysis") {
-            agent {label 'sonarqube'}
+            agent any
             steps {
               withSonarQubeEnv('SonarScanner') {
                     dir("/root/workspace/Sonarqube-pipeline/JenkinsWar") { 
