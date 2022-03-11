@@ -5,6 +5,7 @@
             agent any
             steps {
               withSonarQubeEnv('SonarScanner') {
+                sh 'mv /CICD/JenkinsWar/* /CICD/sonarqube/'   
                 sh 'mvn clean package sonar:sonar'
               }
             }
