@@ -1,4 +1,6 @@
-node {
+pipeline {
+    agent {label 'sonarqube'}
+    stages {
   stage('SCM') {
     checkout scm
   }
@@ -8,4 +10,5 @@ node {
       sh "${scannerHome}/bin/sonar-scanner"
     }
   }
+}
 }
