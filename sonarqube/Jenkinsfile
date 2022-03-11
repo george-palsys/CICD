@@ -1,13 +1,20 @@
-node (sonarqube) {
-  stage('SCM') {
-    checkout scm
-  }
-  stage('SonarQube Analysis') {
-    def scannerHome = tool 'SonarScanner';
-    withSonarQubeEnv() {
-      sh "hostname"
-      sh "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.14.0.9-1.el7_9.x86_64"
-      sh "${scannerHome}/bin/sonar-scanner"
-    }
-  }
-}
+      pipeline {
+        agent none
+        stages {
+          stage("build & SonarQube analysis") {
+            agent any
+            steps {
+              withSonarQubeEnv('My SonarQube Server') {
+                sh 'mvn clean package sonar:sonar'
+              }
+            }
+          }
+          stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
+        }
+      }
