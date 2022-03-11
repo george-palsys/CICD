@@ -1,5 +1,4 @@
-node {
-  agent {label 'sonarqube'}
+node (sonarqube) {
   stage('SCM') {
     checkout scm
   }
