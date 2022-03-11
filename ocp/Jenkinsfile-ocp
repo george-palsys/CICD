@@ -22,7 +22,7 @@ pipeline {
         stage('Create javaapp on ocp') { 
             steps {
                  sh '''
-                      oc delete all --selector app=javaapp
+                      oc delete all --selector app=javaapp -n javaapp
                       argocd app create javaapp --repo https://github.com/george-palsys/CICD.git --path ArgoCD --dest-server https://kubernetes.default.svc --dest-namespace javaapp --upsert 
                  '''
                 }
