@@ -2,7 +2,7 @@
         agent {label 'sonarqube'}
         stages {
           stage("build & SonarQube analysis") {
-            agent {label 'sonarqube'}
+            agent any
             steps {
               withSonarQubeEnv('SonarScanner') {
                     dir("/CICD/JenkinsWar") {  
@@ -11,12 +11,6 @@
               }
             }
           }
-          stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          }
-        }
-      }
+         }
+       }
+
