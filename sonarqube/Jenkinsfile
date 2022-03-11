@@ -6,6 +6,7 @@ node {
     def scannerHome = tool 'SonarScanner';
     withSonarQubeEnv() {
       sh "hostname"
+      sh "export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.14.0.9-1.el7_9.x86_64"
       sh "${scannerHome}/bin/sonar-scanner"
     }
   }
