@@ -14,7 +14,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'argocd', passwordVariable: 'password', usernameVariable: 'username')]){
                sh '''
-                    argocd --insecure --grpc-web login https://10.107.88.135:31856 --username $username --password $password
+                    argocd --insecure --grpc-web login 10.107.88.135:31856 --username $username --password $password
                 '''
               }
             }
