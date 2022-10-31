@@ -19,7 +19,7 @@ spec:
         app: javaapp
     spec:
       containers:
-      - image: quay.online.ocp4.com:443/admin/cicd
+      - image: quay.ocp49.redhat.poc/quayadmin/cicd
         name: javaapp
         env:
         - name: COLOR
