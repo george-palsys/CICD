@@ -14,6 +14,10 @@ pipeline {
                 sh '''
                     podman login quay.ocp49.redhat.poc --tls-verify=false -u $username -p $password
                 '''
+                withCredentials([usernamePassword(credentialsId: 'docker', passwordVariable: 'password', usernameVariable: 'username')]) {
+                sh '''
+                    podman login docker.io --tls-verify=false -u $username -p $password
+                '''
               } 
             }
         }
@@ -26,7 +30,11 @@ pipeline {
 			}
         stage("Upload container images") {
             steps {
-                sh 'podman push quay.ocp49.redhat.poc/quayadmin/cicd'  
+                sh '''
+                    podman push quay.ocp49.redhat.poc/quayadmin/cicd
+                    podman tag quay.ocp49.redhat.poc/quayadmin/cicd docker.io/georgechiu/cicdquay
+                    podman push docker.io/georgechiu/cicdquay
+                '''
             }
             }
       }
